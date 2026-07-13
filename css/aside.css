@@ -16,3 +16,46 @@
 .aside-menu.open {
     transform: translateX(0);
 }
+
+.header-aside {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    width: 200px;
+
+    padding: 10px;
+    flex-wrap: wrap;
+
+    margin: 0 auto;
+}
+
+.aside-header-hr {
+    position: absolute;
+    justify-self: center;
+    
+    top: 60px;
+}
+
+.aside-menu-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.aside-menu-item {
+    text-decoration: none;
+    margin-top: 20px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border: 2px solid var(--background-terciary-color);
+    border-radius: 10px;
+}
+
+.aside-menu-item a {
+    text-decoration: none;
+    color: #000000;
+}

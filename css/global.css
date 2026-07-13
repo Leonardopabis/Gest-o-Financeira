@@ -34,3 +34,8 @@ input {
 .content.menu-open {
     margin-left: 250px;
 }
+
+hr {
+    width: 150px;
+    color: var(--background-terciary-color);
+}

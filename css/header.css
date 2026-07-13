@@ -6,6 +6,8 @@
     justify-content: space-between;
     padding: 10px;
     gap: 16px;
+
+    border: 1px solid var(--background-terciary-color);
 }
 
 .top-header-push {
@@ -44,8 +46,8 @@
 
     gap: 10px;
     padding: 5px;
-    
-    border: 1px solid #dbdbdb;
+
+    border: 1px solid var(--background-terciary-color);
     border-radius: 10px;
     background-color: var(--background-secondary-color);
 }
