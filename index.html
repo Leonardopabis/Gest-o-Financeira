@@ -143,18 +143,54 @@
                 </div>
             </section>
 
-            <section class="new-transaction">
+            <section class="new-transaction-container">
                 <div class="new-transaction-intro">
-                    <img src="" alt="">
+                    <img src="./img/mais-verde.png" alt="">
                     <h2>Nova Transação</h2>
                 </div>
-                <div class="new-transaction-form">
-                    <label for="description">Descrição</label>
-                    <input type="text" placeholder="Ex: Salário" id="description" list="transactions-list">
-                    <datalist id="transactions-list">
-                        <option value="Salário">Salário</option>
-                    </datalist>
-                </div>
+                <form action="" id="new-transaction-form" class="new-transaction-form">
+                    <div class="form-field">
+                        <label for="description">Descrição</label>
+                        <input type="text" placeholder="Ex: Salário" id="description" list="transactions-list">
+                        <datalist id="transactions-list">
+                            <option value="Salário">Salário</option>
+                        </datalist>
+                    </div>
+                    <div class="form-field">
+                        <label for="value">Valor (R$)</label>
+                        <input type="text" placeholder="0,00" id="value">
+                    </div>
+                    <div class="form-field">
+                        <label for="categories">Categorias</label>
+                        <select name="categories" id="categories">
+                            <option value="" selected disabled hidden>Selecione</option>
+                            <option value="saude">Saúde</option>
+                            <option value="trabalho">Trabalho</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="alimentacao">Alimentação</option>
+                        </select>
+                    </div>
+                    <div class="form-field radio-field">
+                        <p>Tipo</p>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="type" value="receita">
+                                Receita
+                            </label>   
+                            <label>
+                                <input type="radio" name="type" value="despesa">
+                                Despesa
+                            </label> 
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="transaction-date">Data</label>
+                        <input type="date" name="" id="transaction-date">
+                    </div>
+                </form>
+                <button type="submit" form="new-transaction-form" class="add-transaction-button">
+                    <p>+ Adicionar Transação</p>
+                </button>
             </section>
         </main>
 

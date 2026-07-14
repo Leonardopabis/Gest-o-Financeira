@@ -13,6 +13,9 @@
     transition: transform 0.3s ease-in-out;
 
     z-index: 1000;
+
+    border-bottom: 1px solid var(--background-terciary-color);
+    border-right: 1px solid var(--background-terciary-color);
 }
 
 .aside-menu.open {
