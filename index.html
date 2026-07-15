@@ -146,7 +146,7 @@
             <section class="new-transaction-container">
                 <div class="new-transaction-intro">
                     <img src="./img/mais-verde.png" alt="">
-                    <h2>Nova Transação</h2>
+                    <h4>Nova Transação</h4>
                 </div>
                 <form action="" id="new-transaction-form" class="new-transaction-form">
                     <div class="form-field">
@@ -192,6 +192,49 @@
                     <p>+ Adicionar Transação</p>
                 </button>
             </section>
+
+            <section class="filter-container">
+                <div class="filter-intro">
+                    <img src="./img/filter.png" alt="">
+                    <h4>Filtros</h4>
+                </div>
+                <div class="filter-list">
+                    <div class="filter-field">
+                        <label for="search">Buscar</label>
+                        <input type="text" id="search" placeholder="Buscar Transações...">
+                    </div>
+                    <div class="filter-field">
+                        <label for="filter-categories">Categorias</label>
+                        <select name="filter-categories" id="filter-categories">
+                            <option value="all" selected>Todos</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="filter-types">Tipo</label>
+                        <select name="filter-types" id="filter-types">
+                            <option value="all" selected>Todos</option>
+                            <option value="filter-income">Receita</option>
+                            <option value="filter-outcome">Despesa</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="filter-period">Período</label>
+                        <select name="filter-period" id="filter-period">
+                            <option value="filter-today">Hoje</option>
+                            <option value="filter-this-week">Essa semana</option>
+                            <option value="filter-this-month" selected>Esse mês</option>
+                            <option value="filter-this-trimester">Último trimestre</option>
+                            <option value="filter-this-semester">Último semestre</option>
+                            <option value="filter-this-year">Último ano</option>
+                        </select>
+                    </div>
+                    <div class="filter-field filter-reset">
+                        <button class="filter-reset-button">
+                            <p>Limpar Filtros</p>
+                        </button>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <aside class="right-aside">
@@ -201,5 +244,6 @@
 
     
     <script src="./js/aside.js"></script>
+    <script src="./js/filter.js"></script>
 </body>
 </html>

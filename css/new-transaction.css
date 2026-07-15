@@ -51,7 +51,7 @@ input[list]::-webkit-calendar-picker-indicator {
   padding-top: 10px;
 }
 
-.form-field input[type="text"], .form-field input[type="date"], .form-field select, .add-transaction-button{
+.add-transaction-button{
   max-width: 200px;
   height: 40px;
   border: 2px solid var(--background-terciary-color);
