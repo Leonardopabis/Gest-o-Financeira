@@ -3,11 +3,17 @@ const criarItemHtml = (descricao, categoria, tipo, valor, data, receita) => {
     const classeValor = receita ? 'income-value' : 'expense-value'
     const sinalValor = receita ? '' : '- '
     const dataFormatada = formartarData(data)
+    let imagem = ''
+    let descricaoImagem = ''
+    if (categoria.toLowerCase() === 'trabalho') {
+        imagem = './img/filter-cifrao.png'
+        descricaoImagem = 'ícone de cifrão referente à receita'
+    }
     return `
                             <tr>
                                 <td>
                                     <div class="transaction-description">
-                                        <img src="./img/filter-cifrao.png" alt="Ícone de despesa">
+                                        <img src='${imagem}' alt='${descricaoImagem}'>
                                         <span>${descricao}</span>
                                     </div>
                                 </td>
