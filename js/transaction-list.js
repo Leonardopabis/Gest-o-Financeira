@@ -59,7 +59,7 @@ const criarItemHtml = (descricao, categoria, tipo, valor, data, receita) => {
 
 async function carregarTransacoes() {
     try {
-        const resposta = await fetch('http://localhost:3000/api/transaction')
+        const resposta = await fetch('http://localhost:3000/api/get-transactions')
 
         if (!resposta.ok) {
             throw new Error(`Erro http: ${resposta.status}`)

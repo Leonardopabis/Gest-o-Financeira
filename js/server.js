@@ -5,6 +5,7 @@ require('dotenv').config()
 
 const app = express()
 app.use(cors())
+app.use(express.json())
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -13,7 +14,7 @@ const connection = mysql.createConnection({
     database: 'transaction'
 })
 
-app.get('/api/transaction', (req, res) => {
+app.get('/api/get-transactions', (req, res) => {
     connection.query(
         'SELECT * FROM transaction',
         (err, results) => {
@@ -21,6 +22,41 @@ app.get('/api/transaction', (req, res) => {
             res.json(results)
         }
     )
+})
+
+app.post('/api/add-new-transaction', (req, res) => {
+    const {
+        descricao,
+        categoria,
+        tipo,
+        valor,
+        data
+    } = req.body
+
+    const sql = `
+        insert into \`transaction\`
+        (descricao, categoria, tipo, valor, data)
+        values (?,?,?,?,?)
+    `
+
+    connection.query(
+        sql, [descricao, categoria, tipo, valor, data],
+        (erro, resultado) => {
+            if (erro) {
+                console.error(erro)
+
+                return res.status(500).json({
+                    erro: 'Erro ao criar transação'
+                })
+            }
+
+            res.status(201).json({
+                mensagem: 'Nova transação criada com sucesso',
+                id: resultado.insertId
+            })
+        }
+    )
+
 })
 
 app.listen(3000, () => {
