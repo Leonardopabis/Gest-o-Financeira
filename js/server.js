@@ -59,6 +59,29 @@ app.post('/api/add-new-transaction', (req, res) => {
 
 })
 
+app.delete('/api/delete-transaction', (req, res) => {
+    const {
+        id
+    } = req.body
+    const sql = `
+    delete from transaction where id = ?
+    `
+    connection.query(
+        sql, [id],
+        (erro, resultado) => {
+            if (erro) {
+                console.error(erro)
+                return res.status(500).json({
+                    erro: 'Erro ao deletar transação'
+                })
+            }
+            return res.status(201).json({
+                mensagem: 'Transação deletada com sucesso'
+            })
+        }
+    )
+})
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000')
 })

@@ -96,17 +96,17 @@ async function carregarTransacoes() {
             const novaTransacao = criarItemHtml(item.descricao, item.categoria, item.tipo, valorFormatado, item.data, isReceita, item.id)
             listaDeTransacoes.insertAdjacentHTML('afterbegin', novaTransacao)
 
-            // funcao do botao de delete
-            let deleteButtons = document.querySelectorAll(".delete-button")
-
-            deleteButtons.forEach((button) => {
-                button.addEventListener('click', () => {
-                    console.log('a')
-                    const id = button.getAttribute('row-id')
-                    console.log(id)
-                })
-            })
         });
+        // funcao do botao de delete
+        const deleteButtons = document.querySelectorAll(".delete-button")
+
+        deleteButtons.forEach((button) => {
+            button.addEventListener('click', async () => {
+                const id = button.getAttribute('row-id')
+                console.log(id)
+                await deletarTransacao(id)
+            })
+        })
     } catch (erro) {
         console.error('Erro ao buscar dados', erro)
     }
@@ -175,7 +175,20 @@ formularioNovaTransacao.addEventListener('submit', async (event) => {
 })
 
 async function deletarTransacao(id) {
-
+    const rowId = { id }
+    try {
+        const resposta = await fetch('http://localhost:3000/api/delete-transaction', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(rowId),
+        })
+        const resultado = await resposta.json()
+        console.log('Resposta do servidor: ', resultado)
+    } catch (erro) {
+        console.error(erro)
+    }
+    carregarTransacoes()
 }
-
 
