@@ -97,38 +97,53 @@ async function carregarTransacoes() {
             listaDeTransacoes.insertAdjacentHTML('afterbegin', novaTransacao)
 
         });
-        // funcao do botao de delete
-        const deleteButtons = document.querySelectorAll(".delete-button")
-        const modal = document.querySelector('.delete-modal')
-        const modalContainer = document.querySelector('.delete-modal-container')
-        const modalText = document.querySelector('.modal-text')
-
-        modal.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape'){
-                event.preventDefault()
-            }
-        })
-
-        deleteButtons.forEach((button) => {
-            button.addEventListener('click', async () => {
-                const id = button.getAttribute('row-id')
-                console.log(id)
-                modalContainer.classList.remove('delete-modal-container')
-                modal.showModal()
-                document.body.classList.add('modal-aberto')
-                const closeModal = document.querySelector('.fechar-modal')
-                closeModal.addEventListener('click', () => {
-                    modal.close()
-                    document.body.classList.remove('modal-aberto')
-                    modalContainer.classList.add('delete-modal-container')
-                })
-                // await deletarTransacao(id)
-            })
-        })
+        configurarBotoesDelete()
     } catch (erro) {
         console.error('Erro ao buscar dados', erro)
     }
 }
+
+const modal = document.querySelector('.delete-modal')
+const modalContainer = document.querySelector('.delete-modal-container')
+const modalText = document.querySelector('.modal-text')
+
+modal.addEventListener('cancel', (event) => {
+    event.preventDefault()
+})
+
+let id = null
+
+function configurarBotoesDelete() {
+    const deleteButtons = document.querySelectorAll('.delete-button')
+
+    deleteButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            id = button.getAttribute('row-id')
+            console.log(id)
+            modal.showModal()
+            document.body.classList.add('modal-aberto')
+            modalContainer.classList.remove('delete-modal-container')
+        })
+    })
+}
+
+function fecharModalDelete() {
+    modal.close()
+    document.body.classList.remove('modal-aberto')
+    modalContainer.classList.add('delete-modal-container')
+}
+
+const closeModal = document.querySelector('.fechar-modal')
+closeModal.addEventListener('click', fecharModalDelete)
+
+const confirmModal = document.querySelector('.confirmar-modal')
+confirmModal.addEventListener('click', async () => {
+    if (!id) return
+    
+    await deletarTransacaoNoBanco(id)
+    fecharModalDelete()
+    id = null
+})
 
 function formartarData(dataISO) {
     const [ano, mes, dia] = dataISO.split('T')[0].split('-')
@@ -136,7 +151,7 @@ function formartarData(dataISO) {
     return `${dia}/${mes}/${ano}`
 }
 
-carregarTransacoes()
+
 
 // Criar nova transação
 const formularioNovaTransacao = document.querySelector('#new-transaction-form')
@@ -192,15 +207,14 @@ formularioNovaTransacao.addEventListener('submit', async (event) => {
 
 })
 
-async function deletarTransacao(id) {
-    const rowId = { id }
+async function deletarTransacaoNoBanco(id) {
     try {
         const resposta = await fetch('http://localhost:3000/api/delete-transaction', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(rowId),
+            body: JSON.stringify({ id }),
         })
         const resultado = await resposta.json()
         console.log('Resposta do servidor: ', resultado)
@@ -210,3 +224,4 @@ async function deletarTransacao(id) {
     carregarTransacoes()
 }
 
+carregarTransacoes()
