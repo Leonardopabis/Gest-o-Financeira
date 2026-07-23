@@ -110,7 +110,15 @@ modal.addEventListener('cancel', (event) => {
     event.preventDefault()
 })
 
+
 let id = null
+
+let editTransactionDescricao = document.querySelector('#edit-description')
+let editTransactionValor = document.querySelector('#edit-value')
+let editTransactionCategoria = document.querySelector('#edit-categories')
+let editTransactionTipo = document.querySelectorAll(`input[name="edit-type"]`)
+let editTransactionData = document.querySelector('#edit-transaction-date')
+
 
 async function configurarBotoesDeleteEEdit() {
     const deleteButtons = document.querySelectorAll('.delete-button')
@@ -127,10 +135,29 @@ async function configurarBotoesDeleteEEdit() {
     })
 
     editButtons.forEach((button) => {
-        button.addEventListener('click', () => {
+        button.addEventListener('click', async () => {
             id = button.getAttribute('row-id')
             console.log(id)
-            getTransactionById(id)
+            const {
+                descricao,
+                categoria,
+                tipo,
+                valor,
+                data
+            } = await carregarEditItem(id)
+
+            editTransactionDescricao.value = descricao
+            editTransactionValor.value = valor
+            editTransactionCategoria.value = categoria
+            editTransactionTipo.forEach((input) => {
+                if (input.value === tipo.toString()) {
+                    input.checked = true;
+                }
+            });
+            const dataFormat = data.substring(0, 10)
+            editTransactionData.value = dataFormat
+
+
             editModal.showModal()
             document.body.classList.add('modal-aberto')
             editModalContainer.classList.remove('edit-modal-container')
@@ -169,7 +196,17 @@ confirmModal.addEventListener('click', async () => {
 const editModal = document.querySelector('.edit-modal')
 const editModalContainer = document.querySelector('.edit-modal-container')
 
+editModal.addEventListener('cancel', (event) => {
+    event.preventDefault()
+})
 
+const confirmEditModal = document.querySelector('.confirm-edit-button')
+confirmEditModal.addEventListener('click', async () => {
+    if (!id) return
+    await editarTransacaoNoBanco(id)
+    fecharModalEdit()
+    id = null
+})
 
 
 
@@ -266,20 +303,24 @@ async function getTransactionById(id) {
         }
         const resultado = await resposta.json()
         console.log('resposta do server: ', resultado)
-        return resultado.resultado
+        return resultado
+}
+//fazer o destructuring
+async function carregarEditItem(id) {
+    const transacao = await getTransactionById(id)
+
+    const descricao = transacao.resultado[0].descricao
+    const categoria = transacao.resultado[0].categoria
+    const tipo = transacao.resultado[0].tipo
+    const valor = transacao.resultado[0].valor
+    const data = transacao.resultado[0].data
+    return {descricao,categoria,tipo,valor,data}
 }
 
-async function carregarEditItem() {
-    const { resultado: {descricao} } = await getTransactionById(11)
-    console.log(descricao)
+async function editarTransacaoNoBanco(id) {
+    const descricao = editTransactionDescricao.value
+
+    carregarTransacoes()
 }
-carregarEditItem()
-// const {
-//     descricao,
-//     categoria,
-//     tipo,
-//     valor,
-//     data
-// }
 
 carregarTransacoes()
