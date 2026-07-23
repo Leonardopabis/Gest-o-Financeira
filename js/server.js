@@ -104,6 +104,27 @@ app.post('/api/get-transaction-by-id', (req, res) => {
     )
 })
 
+app.put('/api/edit-transaction-by-id', (req, res) => {
+    const {
+        id,
+        novaDescricao,
+        novaCategoria,
+        novoValor,
+        novoTipo,
+        novaData
+    } = req.body
+
+    const query = 'update transactions set descricao = (?), categoria = (?), valor = (?), tipo = (?), data = (?) where id = (?)'
+
+    connection.query(query, [novaDescricao, novaCategoria, novoValor, novoTipo, novaData, id], (err, results) => {
+        if (err) { 
+            return res.status(500).json({ erro: err.message })
+        }
+        
+        
+    })
+})
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000')
 })

@@ -157,10 +157,10 @@ async function configurarBotoesDeleteEEdit() {
             const dataFormat = data.substring(0, 10)
             editTransactionData.value = dataFormat
 
-
             editModal.showModal()
             document.body.classList.add('modal-aberto')
             editModalContainer.classList.remove('edit-modal-container')
+
         })
     })
 }
@@ -318,7 +318,40 @@ async function carregarEditItem(id) {
 }
 
 async function editarTransacaoNoBanco(id) {
-    const descricao = editTransactionDescricao.value
+    const novaDescricao = editTransactionDescricao.value
+    const novaCategoria = editTransactionCategoria.value
+    const novoValor = editTransactionValor.value
+    const novoTipo = document.querySelector('input[name="edit-type"]:checked').value
+    const novaData = editTransactionData.value
+
+    const dadosEdit = {
+        id,
+        novaDescricao,
+        novaCategoria,
+        novoValor,
+        novoTipo,
+        novaData
+    }
+
+    const resposta = await fetch('http://localhost:3000/api/edit-transaction-by-id', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dadosEdit),
+    })
+    const resultado = await resposta.json()
+    console.log('Resposta do servidor: ', resultado)
+    console.log('Transação editada')
+
+
+    console.log(novaCategoria)
+    console.log(novaDescricao)
+    console.log(novoValor)
+    console.log(novoTipo)
+    console.log(novaData)
+
+
 
     carregarTransacoes()
 }
