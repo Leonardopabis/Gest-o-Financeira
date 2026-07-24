@@ -280,7 +280,7 @@ formularioNovaTransacao.addEventListener('submit', async (event) => {
         carregarTransacoes()
         formularioNovaTransacao.reset()
 
-        const inputsValidados = formularioNovaTransacao.querySelectorAll('valid-form-input')
+        const inputsValidados = formularioNovaTransacao.querySelectorAll('.valid-form-input')
         inputsValidados.forEach(input => input.classList.remove('valid-form-input'))
 
     } catch (error) {
